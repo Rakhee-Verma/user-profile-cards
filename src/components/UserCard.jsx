@@ -2,8 +2,10 @@ import { useState } from "react";
 import ProfileImage from "./ProfileImage";
 function UserCard({ user }) {
   const [isFollowing, setIsFollowing] = useState(false);
-  const loggedInUserId = Number(localStorage.getItem("loggedInUserId"));
-  const isActive = loggedInUserId === user.id;
+
+  const activeUserIds = JSON.parse(localStorage.getItem("activeUserIds") || "[]");
+  const isActive = activeUserIds.includes(user.id);
+
   const handleFollowClick = () => {
     setIsFollowing((prev) => !prev);
   };

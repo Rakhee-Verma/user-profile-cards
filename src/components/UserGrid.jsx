@@ -4,9 +4,15 @@ import UserCard from "./UserCard";
 
 export const UserGrid = () => {
   const navigate = useNavigate();
+  
   const handleLogout = () => {
-    localStorage.removeItem("loggedInUserId");
-    navigate("/");
+    const loggedInUserId = Number( sessionStorage.getItem("loggedInUserId") );
+    const activeUsers = JSON.parse( localStorage.getItem("activeUserIds") || "[]" );
+    const updatedActiveUsers = activeUsers.filter( (id) => id !== loggedInUserId );
+    localStorage.setItem( "activeUserIds", JSON.stringify(updatedActiveUsers) );
+    sessionStorage.removeItem("loggedInUserId");
+     navigate("/");
+
   };
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10 md:px-12">

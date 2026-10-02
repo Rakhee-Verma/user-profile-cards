@@ -12,11 +12,17 @@ function Login() {
     setSelectedProfile(profile);
     setIsOpen(false);
   };
+
   const handleLogin = (e) => {
-    e.preventDefault();
-    localStorage.setItem("loggedInUserId", selectedProfile.id);
-    navigate("/users");
-  };
+  e.preventDefault();
+  const activeUsers = JSON.parse(localStorage.getItem("activeUserIds") || "[]");
+  if (!activeUsers.includes(selectedProfile.id)) {
+    activeUsers.push(selectedProfile.id);
+  }
+  localStorage.setItem("activeUserIds",JSON.stringify(activeUsers));
+  sessionStorage.setItem("loggedInUserId", selectedProfile.id);
+  navigate("/users");
+};
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-gray-100 p-4">
